@@ -1,0 +1,16 @@
+<component name="libraryTable">
+  <library name="vnpay-client-corda-jackson">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/libs/vnpay-client-corda-jackson.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/vnpay-client-corda-rpc.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/vnpay-corda-serialization.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/vnpay-corda-core.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/commons-lang-2.6.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/vnpay-common-configuration-parsing.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/vnpay-common-validation.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/vnpay-corda-node-api.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

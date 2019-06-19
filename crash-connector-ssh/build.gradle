@@ -1,0 +1,52 @@
+apply plugin: 'java'
+//apply plugin: 'net.corda.plugins.quasar-utils'
+//apply plugin: 'net.corda.plugins.publish-utils'
+apply plugin: 'com.jfrog.artifactory'
+//apply plugin: 'application'
+
+description 'Vnpay crash cli'
+
+repositories {
+    flatDir {
+        dirs '../libs'
+    }
+}
+//sourceSets {
+//    main {
+//        java {
+//            srcDir("src/main/java")
+//        }
+//    }
+//}
+
+dependencies {
+    compile project(':shell')
+    compile group: 'org.apache.sshd', name: 'sshd-core', version: '1.6.0'
+    compile group: 'org.apache.sshd', name: 'sshd-pam', version: '0.11.0'
+    compile group: 'org.bouncycastle', name: 'bcprov-jdk15on', version: '1.60'
+    compile group: 'org.bouncycastle', name: 'bcpkix-jdk15on', version: '1.60'
+    compile group: 'org.apache.mina', name: 'mina-core', version: '2.0.19'
+    compile group: 'org.slf4j', name: 'slf4j-api', version: '1.7.25'
+    compile group: 'org.slf4j', name: 'slf4j-jdk14', version: '1.7.25'
+}
+java {
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
+}
+tasks.withType(JavaCompile) {
+    // Resolves a Gradle warning about not scanning for pre-processors.
+    options.compilerArgs << '-proc:none'
+}
+
+
+//application {
+//    mainClassName = 'org.crsh.cli.impl.bootstrap.Main'
+//}
+
+jar {
+    baseName 'vnpay.crash.connector.ssh'
+}
+
+publish {
+    name jar.baseName
+}

@@ -1,0 +1,57 @@
+apply plugin: 'java'
+//apply plugin: 'net.corda.plugins.quasar-utils'
+//apply plugin: 'net.corda.plugins.publish-utils'
+apply plugin: 'com.jfrog.artifactory'
+//apply plugin: 'application'
+
+description 'Vnpay crash cli'
+
+repositories {
+    flatDir {
+        dirs '../libs'
+    }
+}
+//sourceSets {
+//    main {
+//        java {
+//            srcDir("src/main/java")
+//        }
+//    }
+//}
+
+dependencies {
+    compile project(':cli')
+    compile project(':jline2')
+//    compile "org.codehaus.groovy:groovy-all:*"
+    compile group: 'org.codehaus.groovy', name: 'groovy-all', version: '2.5.6'
+//    compile "javax.servlet:javax.servlet-api:*"
+    compile group: 'javax.servlet', name: 'javax.servlet-api', version: '4.0.1'
+//    compile "com.sun:tools:1.6"
+    compile files("${System.properties['java.home']}/../lib/tools.jar")
+    testCompile "org.jboss.shrinkwrap:shrinkwrap-api:1.2.6"
+    testCompile "org.jboss.shrinkwrap:shrinkwrap-impl-base:1.2.6"
+    testCompile "com.google.guava:guava:14.0"
+    testCompile "org.apache.derby:derby:10.14.2.0"
+    testCompile "org.hibernate:hibernate-entitymanager:5.4.1.Final"
+}
+java {
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
+}
+tasks.withType(JavaCompile) {
+    // Resolves a Gradle warning about not scanning for pre-processors.
+    options.compilerArgs << '-proc:none'
+}
+
+
+//application {
+//    mainClassName = 'org.crsh.cli.impl.bootstrap.Main'
+//}
+
+jar {
+    baseName 'vnpay.crash.shell'
+}
+
+publish {
+    name jar.baseName
+}

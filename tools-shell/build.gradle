@@ -1,0 +1,120 @@
+apply plugin: 'kotlin'
+apply plugin: 'java'
+apply plugin: 'groovy'
+apply plugin: 'net.corda.plugins.quasar-utils'
+apply plugin: 'net.corda.plugins.publish-utils'
+apply plugin: 'com.jfrog.artifactory'
+//apply plugin: 'application'
+
+description 'Corda Shell'
+
+repositories {
+    flatDir {
+        dirs '../libs'
+    }
+}
+
+//configurations {
+//    integrationTestCompile.extendsFrom testCompile
+//    integrationTestRuntime.extendsFrom testRuntime
+//}
+
+//sourceSets {
+//    integrationTest {
+//        kotlin {
+//            compileClasspath += main.output + test.output
+//            runtimeClasspath += main.output + test.output
+//            srcDir file('src/integration-test/kotlin')
+//        }
+//        resources {
+//            srcDir file('src/integration-test/resources')
+//        }
+//    }
+//    test {
+//        resources {
+//            srcDir file('src/test/resources')
+//        }
+//    }
+//}
+
+dependencies {
+    compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
+    testCompile "org.jetbrains.kotlin:kotlin-test:$kotlin_version"
+
+    compile "io.reactivex:rxjava:$rxjava_version"
+    compile "org.hibernate:hibernate-core:$hibernate_version"
+
+    compile group: 'org.apache.activemq', name: 'artemis-amqp-protocol', version: "$artemis_version"
+    compile "org.apache.activemq:artemis-core-client:${artemis_version}"
+    compile "org.apache.activemq:artemis-commons:${artemis_version}"
+
+    compile name: 'vnpay-corda-core'
+    compile name: 'vnpay-corda-serialization'
+    compile name: 'vnpay-corda-node-api'
+    compile name: 'vnpay-client-corda-rpc'
+    compile name: 'vnpay-client-corda-jackson'
+
+    compile group: 'com.google.guava', name: 'guava', version: 'r05'
+    compile group: 'commons-lang', name: 'commons-lang', version: '2.6'
+
+    compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.9.8'
+    compile group: 'com.fasterxml.jackson.dataformat', name: 'jackson-dataformat-yaml', version: '2.9.8'
+
+    // Jackson support: serialisation to/from JSON, YAML, etc.
+//    compile project(':client:jackson')
+
+    // CRaSH: An embeddable monitoring and admin shell with support for adding new commands written in Groovy.
+//    compile("com.github.corda.crash:crash.shell:$crash_version") {
+//        exclude group: "org.slf4j", module: "slf4j-jdk14"
+//        exclude group: "org.bouncycastle"
+//    }
+    //implementation 'com.github.corda.crash:crash.cli:1.3.2'
+
+    //compile("com.github.corda.crash:crash.connectors.ssh:$crash_version") {
+//        exclude group: "org.slf4j", module: "slf4j-jdk14"
+//        exclude group: "org.bouncycastle"
+//    }
+    compile project(':cli')
+    compile project(':shell')
+    compile project(':crash-connector-ssh')
+
+    // JAnsi: for drawing things to the terminal in nicely coloured ways.
+    compile "org.fusesource.jansi:jansi:$jansi_version"
+
+    // Manifests: for reading stuff from the manifest file.
+    compile "com.jcabi:jcabi-manifests:1.1"
+
+    // For logging, required for ANSIProgressRenderer.
+    compile "org.apache.logging.log4j:log4j-core:$log4j_version"
+
+    // Unit testing helpers.
+//    testCompile "junit:junit:$junit_version"
+//    testCompile "org.assertj:assertj-core:$assertj_version"
+//    testCompile project(':test-utils')
+//    testCompile project(':finance:contracts')
+//    testCompile project(':finance:workflows')
+
+    // Jsh: Testing SSH server.
+//    integrationTestCompile "com.jcraft:jsch:$jsch_version"
+//
+//    integrationTestCompile project(':node-driver')
+}
+
+tasks.withType(JavaCompile) {
+    // Resolves a Gradle warning about not scanning for pre-processors.
+    options.compilerArgs << '-proc:none'
+}
+//
+//task integrationTest(type: Test) {
+//    testClassesDirs = sourceSets.integrationTest.output.classesDirs
+//    classpath = sourceSets.integrationTest.runtimeClasspath
+//}
+
+
+jar {
+    baseName 'vnpay-tools-corda-shell'
+}
+
+publish {
+    name jar.baseName
+}

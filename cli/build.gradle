@@ -1,0 +1,45 @@
+apply plugin: 'java'
+//apply plugin: 'net.corda.plugins.quasar-utils'
+//apply plugin: 'net.corda.plugins.publish-utils'
+apply plugin: 'com.jfrog.artifactory'
+apply plugin: 'application'
+
+description 'Vnpay crash cli'
+
+repositories {
+    flatDir {
+        dirs '../libs'
+    }
+}
+//sourceSets {
+//    main {
+//        java {
+//            srcDir("src/main/java")
+//        }
+//    }
+//}
+
+dependencies {
+
+}
+java {
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
+}
+tasks.withType(JavaCompile) {
+    // Resolves a Gradle warning about not scanning for pre-processors.
+    options.compilerArgs << '-proc:none'
+}
+
+
+application {
+    mainClassName = 'org.crsh.cli.impl.bootstrap.Main'
+}
+
+jar {
+    baseName 'vnpay.crash.cli'
+}
+
+publish {
+    name jar.baseName
+}

@@ -1,0 +1,8 @@
+rootProject.name = 'vnpay-tools'
+include 'cli'
+include 'jline2'
+include 'shell'
+include 'crash-connector-ssh'
+include 'tools-shell'
+include 'test'
+
